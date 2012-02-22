@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'vmaster'
+rescue LoadError
+  vmaster_path = File.expand_path('../../lib', __FILE__)
+
+  $:.unshift(vmaster_path)
+
+  require 'vmaster'
+end
+
+program :name, "virtualmaster"
+program :version, VirtualMaster::VERSION
+program :description, "VirtualMaster command line interface"
+program :help_formatter, :compact
+
+VirtualMaster::CLI.run do
+  load File.expand_path('../../lib/vmaster/server_commands.rb', __FILE__)
+end
+

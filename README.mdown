@@ -1,0 +1,11 @@
+# VirtualMaster CLI interface
+
+Proof of concept of VirtualMaster command line interface.
+
+Reads configuration from `~/.virtualmaster`
+
+    endpoint: https://www.virtualmaster.cz/services/deltacloud
+    name: USERNAME
+    password: PASSWORD
+
+You can get credentials at [VirtualMaster Deltacloud API page](https://www.virtualmaster.cz/en/api)

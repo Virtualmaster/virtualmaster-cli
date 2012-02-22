@@ -1,5 +1,7 @@
 require "vmaster/version"
+require "vmaster/cli"
+require "commander/import"
 
-module Vmaster
+module VirtualMaster
   # Your code goes here...
 end

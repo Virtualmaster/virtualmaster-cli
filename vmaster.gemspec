@@ -4,7 +4,7 @@ require "vmaster/version"
 
 Gem::Specification.new do |s|
   s.name        = "vmaster"
-  s.version     = Vmaster::VERSION
+  s.version     = VirtualMaster::VERSION
   s.authors     = ["Radim Marek"]
   s.email       = ["radim@laststation.net"]
   s.homepage    = ""
@@ -21,4 +21,8 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
+  
+  s.add_dependency "commander", "~> 4.1.2"
+  s.add_dependency "deltacloud-client", "~> 0.5.0"
+  s.add_dependency "terminal-table", "~> 1.4.4"
 end
