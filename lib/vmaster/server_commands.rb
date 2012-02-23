@@ -38,29 +38,14 @@ def instance_action(action, args)
   instance.send("#{action}!")
 end
 
-command :reboot do |c|
-  c.syntax = "virtualmaster reboot SERVER"
-  c.description = "Reboot server"
-  c.action do |args, options|
-    instance_action(c.name, args)
+%w{start reboot stop shutdown}.each do |cmd|
+  command cmd do |c|
+    c.syntax = "virtualmaster stop SERVER"
+    c.description = "Stop server"
+    c.action do |args, options|
+      instance_action(c.name, args)
+    end
   end
 end
-
-command :stop do |c|
-  c.syntax = "virtualmaster stop SERVER"
-  c.description = "Stop server"
-  c.action do |args, options|
-    instance_action(c.name, args)
-  end
-end
-
-command :start do |c|
-  c.syntax = "virtualmaster start SERVER"
-  c.description = "Start server"
-  c.action do |args, options|
-    instance_action(c.name, args)
-  end
-end
-
 
 # TODO continue
