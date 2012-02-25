@@ -90,8 +90,21 @@ end
 
 %w{start reboot stop shutdown destroy}.each do |cmd|
   command cmd do |c|
-    c.syntax = "virtualmaster stop SERVER"
-    c.description = "Stop server"
+    c.syntax = "virtualmaster #{c.name} SERVER"
+
+    case c.name
+    when "start"
+      c.description = "Start server (when stopped)"
+    when "reboot"
+      c.description = "Reboot server"
+    when "stop"
+      c.description = "Stop server"
+    when "shutdown" 
+      c.description = "Shutdown server (ACPI)"
+    when "destroy"
+      c.description = "Remove server"
+    end
+
     c.action do |args, options|
       instance_action(c.name, args)
     end
