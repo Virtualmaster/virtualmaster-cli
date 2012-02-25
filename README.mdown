@@ -1,11 +1,29 @@
-# VirtualMaster CLI interface
+# VirtualMaster command line interface
 
-Proof of concept of VirtualMaster command line interface.
+Proof of concept of VirtualMaster command line interface
 
-Reads configuration from `~/.virtualmaster`
+    # virtualmaster
+    Running virtualmaster for first time.
+    Setting up environment.
 
-    endpoint: https://www.virtualmaster.cz/services/deltacloud
-    name: USERNAME
-    password: PASSWORD
+    You API credentials are available from http://www.virtualmaster.cz/en/api#settings
 
-You can get credentials at [VirtualMaster Deltacloud API page](https://www.virtualmaster.cz/en/api)
+    Enter your API username:
+    Enter your API password:
+
+    Settings stored within ~/.virtualmaster.conf
+
+    # virtualmaster create demo1 --image lucid
+    Using image 'lucid' with id (999).
+    Creating 'micro' instance (512 MB memory/5 GB storage).
+    Instance launch request accepted (instance id 44444).
+
+    Default password 'AdVc:PBi8&7L'.
+
+    # virtualmaster instances
+    +-------+---------+----------------+
+    | name  | state   | ip_address     |
+    +-------+---------+----------------+
+    | demo1 | RUNNING | 195.140.253.88 |
+    +-------+---------+----------------+
+
