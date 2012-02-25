@@ -2,7 +2,7 @@
 
 Proof of concept of VirtualMaster command line interface
 
-    # virtualmaster
+    # virtualmaster config
     Running virtualmaster for first time.
     Setting up environment.
 
@@ -11,7 +11,7 @@ Proof of concept of VirtualMaster command line interface
     Enter your API username:
     Enter your API password:
 
-    Settings stored within ~/.virtualmaster.conf
+    Settings stored within ~/.virtualmaster
 
     # virtualmaster create demo1 --image lucid
     Using image 'lucid' with id (999).
