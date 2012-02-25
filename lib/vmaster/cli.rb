@@ -11,7 +11,9 @@ module VirtualMaster
       if File.exists? config_file
         @config = YAML::load(File.open(config_file))
 
-        @@api = DeltaCloud.new(@config["name"], @config["password"], @config["endpoint"])
+        puts @config.inspect
+
+        @@api = DeltaCloud.new(@config["username"], @config["password"], VirtualMaster::DEFAULT_URL)
       end
 
       yield

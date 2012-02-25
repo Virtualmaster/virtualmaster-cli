@@ -6,7 +6,7 @@ Proof of concept of VirtualMaster command line interface
     Running virtualmaster for first time.
     Setting up environment.
 
-    You API credentials are available from http://www.virtualmaster.cz/en/api#settings
+    Your API credentials are available from http://www.virtualmaster.cz/en/api#settings
 
     Enter your API username:
     Enter your API password:
