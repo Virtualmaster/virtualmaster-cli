@@ -30,12 +30,15 @@ command :config do |c|
 
       config = {
         'username' => options.username,
-        'password' => options.password
+        'password' => options.password,
+        'default_image' => VirtualMaster::DEFAULT_IMAGE
       }
 
       File.open(config_file, 'w') do |f|
         f.puts YAML.dump(config)
       end
+
+      say "Setting stored under #{config_file}"
     rescue DeltaCloud::API::BackendError => e
       say "Unable to connect to VirtualMaster API: #{e.message}"
     rescue Exception => e

@@ -2,18 +2,61 @@ require 'terminal-table'
 
 default_command :help
 
-def get_instances
-  api = VirtualMaster::CLI.api
+command :create do |c|
+  c.description = "Launch new server instance"
+  c.option '--image TEMPLATE', String, 'instance template to use'
+  c.option '--profile PROFILE', String, 'instance hardware profile'
+  c.action do |args, options|
+    name = args.shift || abort('Server name required')
 
-  api.instances
-end
+    # verify server name
+    abort("Virtual server with name #{name} already exists!") if VirtualMaster::Helpers.get_instance(name)
 
-def find_instance(instances, name)
-  instances.each do |instance|
-    return instance if instance.name == name
+    # image 
+    image_name = nil
+    image_id = VirtualMaster::CLI.config[:default_image] || VirtualHost::DEFAULT_IMAGE
+
+    if options.image
+      image_name = options.image
+
+      if image_name.match /^id:/
+        # use image_id directly
+        image_id = image_name[3..-1].to_i
+
+        image_name = nil
+      else
+        # lookup predefined images
+        image_id = VirtualMaster::IMAGES[image_name.to_sym]
+
+        abort "Image '#{image_name}' not recognized!" unless image_id
+      end
+    end
+
+    say image_name ? "Using image '#{image_name}' with ID #{image_id}" : "Using image with ID #{image_id}"
+
+    # instance hardware profile
+    profile_name = options.profile || VirtualMaster::DEFAULT_PROFILE
+
+    profile = VirtualMaster::PROFILES[profile_name.to_sym]
+    abort "Image name '#{options.profile}' not recognized!" unless profile
+
+    hwp = VirtualMaster::Helpers.get_hw_profile(profile[:memory], profile[:storage])
+    abort "Internal error: hardware profile not available" unless hwp
+
+    say "Creating '#{profile_name}' instance (#{profile[:memory]} MB memory/#{profile[:storage]/1024} GB storage)"
+
+    instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id)
+
+    # TODO handle exceptions (invalid image/profile, limits, etc.)
+
+    say "Instance launch request accepted. Instance ID #{instance.id}"
+
+    # FIXME authentication is missrepresented within Ruby object
+    say "\n"
+    say "Default password '#{instance.authentication[:username]}'"
+
+
   end
-
-  nil
 end
 
 command :list do |c|
@@ -21,12 +64,19 @@ command :list do |c|
   c.action do |args, options|
     instances = []
 
-    get_instances.each do |instance|
-      instances << [instance.name, instance.state, instance.public_addresses.first[:address]]
+    VirtualMaster::Helpers.get_instances.each do |instance|
+      unless instance.public_addresses.first.nil?
+        ip_address = instance.public_addresses.first[:address]
+      else
+        ip_address = "(not assigned)"
+      end
+
+      instances << [instance.name, instance.state, ip_address]
     end
 
-    table = Terminal::Table.new :headings => ['name','state','ip_address'], :rows => instances
+    abort "No instances found" if instances.empty?
 
+    table = Terminal::Table.new :headings => ['name','state','ip_address'], :rows => instances
     puts table
   end
 end
@@ -34,11 +84,11 @@ end
 def instance_action(action, args)
   name = args.shift || abort('server name required')
 
-  instance = find_instance(get_instances, name)
+  instance = VirtualMaster::Helpers.get_instance(name)
   instance.send("#{action}!")
 end
 
-%w{start reboot stop shutdown}.each do |cmd|
+%w{start reboot stop shutdown destroy}.each do |cmd|
   command cmd do |c|
     c.syntax = "virtualmaster stop SERVER"
     c.description = "Stop server"
@@ -47,5 +97,3 @@ end
     end
   end
 end
-
-# TODO continue
