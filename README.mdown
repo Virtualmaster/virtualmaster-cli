@@ -27,3 +27,7 @@ Proof of concept of VirtualMaster command line interface
     | demo1 | RUNNING | 195.140.253.88 |
     +-------+---------+----------------+
 
+## Install
+
+The current version of `virtualmaster` command line interface should work with Ruby 1.8.7+.
+
