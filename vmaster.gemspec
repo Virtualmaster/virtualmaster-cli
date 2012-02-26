@@ -25,4 +25,6 @@ Gem::Specification.new do |s|
   s.add_dependency "commander", "~> 4.1.2"
   s.add_dependency "deltacloud-client", "~> 0.5.0"
   s.add_dependency "terminal-table", "~> 1.4.4"
+
+  s.add_development_dependency "rspec", "~> 2"
 end

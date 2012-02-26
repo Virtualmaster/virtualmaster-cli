@@ -3,6 +3,7 @@ require "vmaster/helpers"
 require "vmaster/cli"
 require "commander/import"
 
-module VirtualMaster
-  # Your code goes here...
-end
+# include commands
+require 'vmaster/config_command'
+require 'vmaster/server_commands'
+
