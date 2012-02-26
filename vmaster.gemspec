@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Radim Marek"]
   s.email       = ["radim@laststation.net"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Command line interface to VirtualMaster}
+  s.description = %q{Command line interface to VirtualMaster. Control your virtual infrastructure.}
 
   s.rubyforge_project = "vmaster"
 
