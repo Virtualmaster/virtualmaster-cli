@@ -1,6 +1,5 @@
 require 'terminal-table'
 
-default_command :help
 
 command :create do |c|
   c.description = "Launch new server instance"
@@ -55,9 +54,10 @@ command :create do |c|
     # FIXME authentication is missrepresented within Ruby object
     say "\n"
     say "Default password '#{instance.authentication[:username]}'"
+      
+    if options.wait
       print 'Waiting for instance'
 
-    if options.wait
       while (instance = VirtualMaster::Helpers.get_instance(name)).state != "RUNNING" do
         print '.'
 
