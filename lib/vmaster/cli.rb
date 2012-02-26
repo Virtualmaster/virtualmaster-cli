@@ -21,6 +21,7 @@ module VirtualMaster
     end
 
     def self.api
+      abort "No configuration available! Please run 'virtualmaster config' first!" unless @@api
       @@api
     end
 
