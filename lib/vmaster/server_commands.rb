@@ -6,6 +6,7 @@ command :create do |c|
   c.description = "Launch new server instance"
   c.option '--image TEMPLATE', String, 'instance template to use'
   c.option '--profile PROFILE', String, 'instance hardware profile'
+  c.option '--wait', 'wait for instance to become operational'
   c.action do |args, options|
     name = args.shift || abort('Server name required')
 
@@ -54,8 +55,19 @@ command :create do |c|
     # FIXME authentication is missrepresented within Ruby object
     say "\n"
     say "Default password '#{instance.authentication[:username]}'"
+      print 'Waiting for instance'
 
+    if options.wait
+      while (instance = VirtualMaster::Helpers.get_instance(name)).state != "RUNNING" do
+        print '.'
 
+        sleep(5)
+      end
+
+      puts
+      puts "Instance ready!"
+      puts "Try to login using `ssh root@#{instance.public_addresses.first[:address]}'"
+    end
   end
 end
 
