@@ -26,7 +26,7 @@ command :create do |c|
         image_name = nil
       else
         # lookup predefined images
-        image_id = VirtualMaster::IMAGES[image_name.to_sym]
+        image_id = VirtualMaster::CLI.config[:images][image_name.to_sym]
 
         abort "Image '#{image_name}' not recognized!" unless image_id
       end
