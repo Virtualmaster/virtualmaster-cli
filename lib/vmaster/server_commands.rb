@@ -1,12 +1,26 @@
 require 'terminal-table'
+require 'net/ssh'
+require 'logger'
+require "base64"
+require 'openssl'
 
+log = Logger.new(STDOUT)
+log.level = Logger::WARN
+
+# SSH copy id
+# FIXME how to select the right key
 
 command :create do |c|
   c.description = "Launch new server instance"
   c.option '--image TEMPLATE', String, 'instance template to use'
   c.option '--profile PROFILE', String, 'instance hardware profile'
+  c.option '--copy-id', 'install public key on a machine'
+  c.option '--identity IDENTITY', String, 'SSH identity to use (with --copy-id)'
   c.option '--wait', 'wait for instance to become operational'
   c.action do |args, options|
+    # default values
+    options.default :identity => File.join(ENV['HOME'], '.ssh/id_rsa')
+
     name = args.shift || abort('Server name required')
 
     # verify server name
@@ -52,10 +66,12 @@ command :create do |c|
     say "Instance launch request accepted. Instance ID #{instance.id}"
 
     # FIXME authentication is missrepresented within Ruby object
+    password = instance.authentication[:username]
     say "\n"
-    say "Default password '#{instance.authentication[:username]}'"
-      
-    if options.wait
+    say "Default password '#{password}'"
+
+    # copy-id implies waiting for instance to become operational
+    if options.wait || options.copy_id
       print 'Waiting for instance'
 
       while (instance = VirtualMaster::Helpers.get_instance(name)).state != "RUNNING" do
@@ -64,9 +80,33 @@ command :create do |c|
         sleep(5)
       end
 
-      puts
-      puts "Instance ready!"
-      puts "Try to login using `ssh root@#{instance.public_addresses.first[:address]}'"
+      unless options.copy_id
+        puts
+        puts "Instance ready!"
+        puts "Try to login using `ssh root@#{instance.public_addresses.first[:address]}'"
+      else
+        authorized_key = nil
+
+        # TODO copy-id
+        mgr = Net::SSH::Authentication::KeyManager.new(log)
+        mgr.add(options.identity)
+        mgr.each_identity do |id|
+          puts id.fingerprint
+          puts id.comment == options.identity
+
+          authtype = id.class.to_s.split('::').last.downcase
+          b64pub = ::Base64.encode64(id.to_blob).strip.gsub(/[\r\n]/, '')
+          authorized_key = "ssh-%s %s\n" % [authtype, b64pub]  # => ssh-rsa AAAAB3NzaC1...=
+        end
+
+        Net::SSH.start(instance.public_addresses.first[:address], 'root', :password => password) do |ssh|
+          # TODO exception handling
+          output = ssh.exec!("mkdir ~/.ssh")
+          output = ssh.exec!("echo '#{authorized_key}' >>~/.ssh/authorized_keys")
+        end
+
+
+      end
     end
   end
 end
