@@ -31,3 +31,21 @@ Proof of concept of VirtualMaster command line interface
 
 The current version of `virtualmaster` command line interface should work with Ruby 1.8.7+.
 
+## Automatically install SSH keys
+
+VirtualMaster CLI can install your SSH keys to a remote machine automatically using `--copy-id` switch.
+
+
+	virtualmaster create demo1 --image ubuntu_lucid --copy-id 
+	Using image 'ubuntu_lucid' with ID 124
+	Creating 'micro' instance (512 MB memory/10 GB storage)
+	Instance launch request accepted. Instance ID 45387
+
+	Default password 'vBK7i!kK'
+	Waiting for instance............
+	Loading identity file
+
+	Instance ready!
+	Try to login using `ssh root@195.140.253.130'
+	
+If you want to specify other key (ie. not ~/.ssh/id_rsa) use option `--identity IDENTITY_FILE`.
