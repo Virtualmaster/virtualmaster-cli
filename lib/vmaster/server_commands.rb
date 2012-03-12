@@ -79,34 +79,33 @@ command :create do |c|
 
         sleep(5)
       end
+      
+      puts
 
-      unless options.copy_id
-        puts
-        puts "Instance ready!"
-        puts "Try to login using `ssh root@#{instance.public_addresses.first[:address]}'"
-      else
+      # copy ssh id
+      if options.copy_id
         authorized_key = nil
 
-        # TODO copy-id
-        mgr = Net::SSH::Authentication::KeyManager.new(log)
-        mgr.add(options.identity)
-        mgr.each_identity do |id|
-          puts id.fingerprint
-          puts id.comment == options.identity
-
-          authtype = id.class.to_s.split('::').last.downcase
-          b64pub = ::Base64.encode64(id.to_blob).strip.gsub(/[\r\n]/, '')
-          authorized_key = "ssh-%s %s\n" % [authtype, b64pub]  # => ssh-rsa AAAAB3NzaC1...=
-        end
-
+        abort "Specified identity file #{options.identity} doesn't exists!" unless File.exist?(options.identity)
+        
+        say "Loading identity file\n"
+        key = OpenSSL::PKey::RSA.new File.read options.identity
+        
+        # build authorized key output string
+        authtype = key.class.to_s.split('::').last.downcase
+        b64pub = ::Base64.encode64(key.to_blob).strip.gsub(/[\r\n]/, '')
+        authorized_key = "ssh-%s %s\n" % [authtype, b64pub]  # => ssh-rsa AAAAB3NzaC1...=
+        
         Net::SSH.start(instance.public_addresses.first[:address], 'root', :password => password) do |ssh|
           # TODO exception handling
           output = ssh.exec!("mkdir ~/.ssh")
           output = ssh.exec!("echo '#{authorized_key}' >>~/.ssh/authorized_keys")
         end
-
-
       end
+      
+      puts
+      puts "Instance ready!"
+      puts "Try to login using `ssh root@#{instance.public_addresses.first[:address]}'"      
     end
   end
 end
