@@ -3,11 +3,11 @@ $:.push File.expand_path("../lib", __FILE__)
 require "vmaster/version"
 
 Gem::Specification.new do |s|
-  s.name        = "vmaster"
+  s.name        = "virtualmaster"
   s.version     = VirtualMaster::VERSION
   s.authors     = ["Radim Marek"]
   s.email       = ["radim@laststation.net"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/virtualmaster/virtualmaster-cli"
   s.summary     = %q{Command line interface to VirtualMaster}
   s.description = %q{Command line interface to VirtualMaster. Control your virtual infrastructure.}
 
