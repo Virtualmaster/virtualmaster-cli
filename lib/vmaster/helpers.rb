@@ -3,14 +3,14 @@ module VirtualMaster
   CONFIG_FILE = ".virtualmaster"
   DEFAULT_URL = "https://www.virtualmaster.cz/services/deltacloud"
 
-  DEFAULT_IMAGE = 842
+  DEFAULT_IMAGE = 124
   DEFAULT_PROFILE = "micro"
 
-  # TODO use as a definition
+  # pre-defined list of images
   IMAGES = {
     :ubuntu_lucid => 124,
-    :debian_squeeze => 842,
-    :centos_55 => 135
+    :debian_squeeze => 1741,
+    :centos_6 => 1743
   }
 
   PROFILES = {
