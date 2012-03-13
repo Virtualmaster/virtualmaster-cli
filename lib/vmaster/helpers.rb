@@ -16,11 +16,11 @@ module VirtualMaster
   PROFILES = {
     :nano => {
       :memory => 256,
-      :storage => 5120
+      :storage => 3840
     },
     :micro => {
       :memory => 512,
-      :storage => 10240
+      :storage => 6144
     },
     :milli => {
       :memory => 1024,
@@ -33,11 +33,11 @@ module VirtualMaster
     :medium => {
       :memory => 4096,
       :storage => 40960
-    },
-    :large => {
-      :memory => 8192,
-      :storage => 8192
     }
+    #:large => {
+    #  :memory => 8192,
+    #  :storage => 8192
+    #}
   }
 
 
