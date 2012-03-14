@@ -16,10 +16,14 @@ command :create do |c|
   c.option '--profile PROFILE', String, 'instance hardware profile'
   c.option '--copy-id', 'install public key on a machine'
   c.option '--identity IDENTITY', String, 'SSH identity to use (with --copy-id)'
+  c.option '--zone ZONE', String, 'Availability zone to launch instance i'
+  c.option '--level LEVEL', String, 'Instance level to use (personal, production)'
   c.option '--wait', 'wait for instance to become operational'
   c.action do |args, options|
     # default values
     options.default :identity => File.join(ENV['HOME'], '.ssh/id_rsa')
+    options.default :zone => "prague-l1"
+    options.default :level => "personal"
 
     name = args.shift || abort('Server name required')
 
@@ -58,8 +62,12 @@ command :create do |c|
     abort "Internal error: hardware profile not available" unless hwp
 
     say "Creating '#{profile_name}' instance (#{profile[:memory]} MB memory/#{profile[:storage]/1024} GB storage)"
+    
+    realm = "#{options.zone}-#{options.level}"
+    
+    puts "---- realm = #{realm}"
 
-    instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id)
+    instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id, realm)
 
     # TODO handle exceptions (invalid image/profile, limits, etc.)
 
@@ -122,12 +130,12 @@ command :list do |c|
         ip_address = "(not assigned)"
       end
 
-      instances << [instance.name, instance.state, ip_address]
+      instances << [instance.name, instance.state, ip_address, instance.realm.id]
     end
 
     abort "No instances found" if instances.empty?
 
-    table = Terminal::Table.new :headings => ['name','state','ip_address'], :rows => instances
+    table = Terminal::Table.new :headings => ['name','state','ip_address', 'zone'], :rows => instances
     puts table
   end
 end
