@@ -144,6 +144,9 @@ def instance_action(action, args)
   name = args.shift || abort('server name required')
 
   instance = VirtualMaster::Helpers.get_instance(name)
+  
+  abort "Invalid instance name!" if instance.nil?
+  
   instance.send("#{action}!")
 end
 
