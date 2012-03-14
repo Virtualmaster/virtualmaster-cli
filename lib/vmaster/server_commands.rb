@@ -65,8 +65,6 @@ command :create do |c|
     
     realm = "#{options.zone}-#{options.level}"
     
-    puts "---- realm = #{realm}"
-
     instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id, realm)
 
     # TODO handle exceptions (invalid image/profile, limits, etc.)
