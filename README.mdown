@@ -48,8 +48,13 @@ VirtualMaster CLI can install your SSH keys to a remote machine automatically us
 	Instance ready!
 	Try to login using `ssh root@195.140.253.130'
 	
-If you want to specify other key (ie. not ~/.ssh/id_rsa) use option `--identity IDENTITY_FILE`.
+If you want to specify other key (ie. not ~/.ssh/id\_rsa) use option `--identity IDENTITY_FILE`.
 
 ## More information	
 
 Additional topics are available in [the wiki](https://github.com/Virtualmaster/virtualmaster-cli/wiki).
+
+## Changelog
+
+* v0.0.5 - Added support for availability zones and instance levels
+* v0.0.3 - First public release
