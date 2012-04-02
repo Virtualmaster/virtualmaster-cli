@@ -20,7 +20,7 @@ module VirtualMaster
     },
     :micro => {
       :memory => 512,
-      :storage => 6144
+      :storage => 10240,
     },
     :milli => {
       :memory => 1024,
@@ -28,18 +28,17 @@ module VirtualMaster
     },
     :small => {
       :memory => 2048,
-      :storage => 30720
+      :storage => 30720,
     },
     :medium => {
       :memory => 4096,
-      :storage => 40960
+      :storage => 40960,
+    },
+    :large => {
+      :memory => 8192,
+      :storage => 8192,
     }
-    #:large => {
-    #  :memory => 8192,
-    #  :storage => 8192
-    #}
   }
-
 
   module Helpers
     def self.get_instances

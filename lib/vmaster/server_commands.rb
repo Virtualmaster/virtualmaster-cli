@@ -55,7 +55,9 @@ command :create do |c|
     # instance hardware profile
     profile_name = options.profile || VirtualMaster::DEFAULT_PROFILE
 
-    profile = VirtualMaster::PROFILES[profile_name.to_sym]
+    profile = VirtualMaster::CLI.config[:profiles][profile_name.to_sym]
+    profile = VirtualMaster::PROFILES[profile_name.to_sym] unless profile
+
     abort "Image name '#{options.profile}' not recognized!" unless profile
 
     hwp = VirtualMaster::Helpers.get_hw_profile(profile[:memory], profile[:storage])

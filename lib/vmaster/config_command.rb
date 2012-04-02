@@ -32,7 +32,8 @@ command :config do |c|
         'username' => options.username,
         'password' => options.password,
         'default_image' => VirtualMaster::DEFAULT_IMAGE,
-        'images' => VirtualMaster::IMAGES
+        'images' => VirtualMaster::IMAGES,
+        'profiles' => VirtualMaster::PROFILES
       }
 
       File.open(config_file, 'w') do |f|
