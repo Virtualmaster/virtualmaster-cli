@@ -14,6 +14,11 @@ module VirtualMaster
 
         @@config = config.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
 
+        unless @@config[:profiles]
+          puts "WARNING: Please, reconfigure virtualmaster-cli (delete your '~/.virtualmaster' and run `virtualmaster config` again). This way you can use custom instance profiles correctly (new in version 0.0.5)"
+          puts
+        end
+
         @@api = DeltaCloud.new(@@config[:username], @@config[:password], VirtualMaster::DEFAULT_URL)
       end
 
