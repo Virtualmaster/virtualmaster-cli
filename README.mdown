@@ -50,6 +50,13 @@ VirtualMaster CLI can install your SSH keys to a remote machine automatically us
 	
 If you want to specify other key (ie. not ~/.ssh/id\_rsa) use option `--identity IDENTITY_FILE`.
 
+## Instance size
+
+Default hardware profile for instances are defined in the [helpers file](https://github.com/Virtualmaster/virtualmaster-cli/blob/master/lib/vmaster/helpers.rb). Profiles are stored in configuration file when user runs `virtualmaster config`.
+
+Provided instance sizes are just guidance and you are free to create your own settings by editing `~/.virtualmaster` config file.
+
+
 ## More information	
 
 Additional topics are available in [the wiki](https://github.com/Virtualmaster/virtualmaster-cli/wiki).
