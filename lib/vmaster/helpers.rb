@@ -56,7 +56,7 @@ module VirtualMaster
     def self.get_hw_profile(memory, storage)
       api = VirtualMaster::CLI.api
 
-      profile_list = api.hardware_profiles.reject { |p| p.memory.value.to_i != memory && p.storage.value.to_i != storage }
+      profile_list = api.hardware_profiles.select { |p| p.memory.value.to_i == memory && p.storage.value.to_i == storage }
 
       profile_list.first
     end
