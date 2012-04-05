@@ -37,9 +37,10 @@ command :create do |c|
     if options.image
       image_name = options.image
 
-      if image_name.match /^id:/
+
+      if image_name.match /^[\d]+$/
         # use image_id directly
-        image_id = image_name[3..-1].to_i
+        image_id = image_name.to_i
 
         image_name = nil
       else
