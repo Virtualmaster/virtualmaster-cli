@@ -18,17 +18,21 @@ command :create do |c|
   c.option '--identity IDENTITY', String, 'SSH identity to use (with --copy-id)'
   c.option '--zone ZONE', String, 'Availability zone to launch instance i'
   c.option '--level LEVEL', String, 'Instance level to use (personal, production)'
-  c.option '--wait', 'wait for instance to become operational'
+  c.option '--detached', 'Do not wait for instance to become operational (disables callbacks)'
   c.action do |args, options|
     # default values
     options.default :identity => File.join(ENV['HOME'], '.ssh/id_rsa')
     options.default :zone => "prague-l1"
     options.default :level => "personal"
+    options.default :interactive => true
 
     name = args.shift || abort('Server name required')
 
     # verify server name
     abort("Virtual server with name #{name} already exists!") if VirtualMaster::Helpers.get_instance(name)
+
+    # support for non-interactive mode
+    options.interactive = false if options.detached
 
     # image 
     image_name = nil
@@ -78,11 +82,12 @@ command :create do |c|
 
     # FIXME authentication is missrepresented within Ruby object
     password = instance.authentication[:username]
-    say "\n"
+    puts
     say "Default password '#{password}'"
+    puts
 
     # copy-id implies waiting for instance to become operational
-    if options.wait || options.copy_id
+    if options.interactive
       print 'Waiting for instance'
 
       while (instance = VirtualMaster::Helpers.get_instance(name)).state != "RUNNING" do
@@ -94,6 +99,7 @@ command :create do |c|
       puts
 
       # copy ssh id
+      # TODO move to callback
       if options.copy_id
         authorized_key = nil
 
