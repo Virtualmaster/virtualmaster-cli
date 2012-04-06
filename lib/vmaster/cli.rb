@@ -19,7 +19,13 @@ module VirtualMaster
           puts
         end
 
-        @@api = DeltaCloud.new(@@config[:username], @@config[:password], VirtualMaster::DEFAULT_URL)
+        begin
+          @@api = DeltaCloud.new(@@config[:username], @@config[:password], VirtualMaster::DEFAULT_URL)
+        rescue DeltaCloud::API::BackendError => e
+          abort "Invalid API response: #{e.message}"
+        rescue Exception => e
+          abort "Unable to connect to Virtualmaster's DeltaCloud API: #{e.message}" 
+        end
       end
 
       yield
