@@ -37,11 +37,13 @@ command :create do |c|
     if options.image
       image_name = options.image
 
-
       if image_name.match /^[\d]+$/
         # use image_id directly
         image_id = image_name.to_i
 
+        image_name = nil
+      elsif image_name.match /^http(s)?:\/\//
+        image_id = image_name
         image_name = nil
       else
         # lookup predefined images
@@ -51,7 +53,7 @@ command :create do |c|
       end
     end
 
-    say image_name ? "Using image '#{image_name}' with ID #{image_id}" : "Using image with ID #{image_id}"
+    say image_name ? "Using image '#{image_name}' with ID #{image_id}" : "Using image #{image_id}"
 
     # instance hardware profile
     profile_name = options.profile || VirtualMaster::DEFAULT_PROFILE
