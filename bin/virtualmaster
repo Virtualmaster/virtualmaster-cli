@@ -18,9 +18,18 @@ program :help_formatter, :compact
 default_command :help
 
 VirtualMaster::CLI.run do
+  # load callback
+  callback_files = File.join(File.dirname(__FILE__), "../lib/vmaster/callbacks/*.rb")
+  Dir.glob(callback_files).each do |f|
+    load f
+  end
+
+  # TODO find callbacks in other rubygems
+
+  # include commands
+  require 'vmaster/config_command'
+  require 'vmaster/server_commands'
 end
-
-
 
 Commander::Runner.instance.run!
 
