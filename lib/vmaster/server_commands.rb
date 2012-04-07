@@ -98,6 +98,9 @@ command :create do |c|
       
       puts
 
+      # TODO experimental callback integration
+      VirtualMaster::Callbacks.trigger_event(:create, :after)
+
       # copy ssh id
       # TODO move to callback
       if options.copy_id

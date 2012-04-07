@@ -5,6 +5,7 @@ module VirtualMaster
   class CLI
     @@api = nil
     @@config = nil
+    @@callbacks = []
 
     def self.run
       # load config
@@ -39,5 +40,10 @@ module VirtualMaster
     def self.config
       @@config
     end
+
+    def self.callbacks
+      @@callbacks
+    end
   end
 end
+

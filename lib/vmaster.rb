@@ -4,6 +4,7 @@ require "vmaster/version"
 require "vmaster/helpers"
 require "vmaster/cli"
 require "vmaster/request"
+require "vmaster/callbacks"
 
 require 'commander'
 require 'commander/delegates'

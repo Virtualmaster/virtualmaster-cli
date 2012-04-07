@@ -21,7 +21,7 @@ VirtualMaster::CLI.run do
   # load callback
   callback_files = File.join(File.dirname(__FILE__), "../lib/vmaster/callbacks/*.rb")
   Dir.glob(callback_files).each do |f|
-    load f
+    VirtualMaster::Callbacks.load_file(f)
   end
 
   # TODO find callbacks in other rubygems
