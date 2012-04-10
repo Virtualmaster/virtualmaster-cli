@@ -18,9 +18,3 @@ include Commander::UI::AskForClass
 include Commander::Delegates
 
 $terminal.wrap_at = HighLine::SystemExtensions.terminal_size.first - 5 rescue 80 if $stdin.tty?
-
-
-# include commands
-require 'vmaster/config_command'
-require 'vmaster/server_commands'
-
