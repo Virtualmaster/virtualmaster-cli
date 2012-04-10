@@ -15,6 +15,8 @@ module VirtualMaster
       def initialize(name, &block)
         @name = name
         @blocks = {}
+        @auto_run = true
+        @option = nil
         
         instance_eval &block
       end
@@ -27,8 +29,15 @@ module VirtualMaster
         store_callback(event, :after, &block)
       end
 
-      def fire(event, phase, server)
-        @blocks[event][phase].call(server) if includes?(event, phase)
+      def option(trigger)
+        # disable auto_run when option provided
+        @auto_run = false
+
+        @option = trigger
+      end
+
+      def fire(event, phase, options, server)
+        @blocks[event][phase].call(server) if includes?(event, phase) && (@auto_run || options[@option] == true)
       end
 
       def to_s
@@ -54,9 +63,9 @@ module VirtualMaster
       load file
     end
 
-    def self.trigger_event(event, phase, server = {})
+    def self.trigger_event(event, phase, options, server = {})
       CLI.callbacks.each do |callback|
-        callback.fire(event, phase, server)
+        callback.fire(event, phase, options, server)
       end
     end
   end

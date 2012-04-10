@@ -12,6 +12,9 @@ log.level = Logger::WARN
 
 command :create do |c|
   c.description = "Launch new server instance"
+  # FIXME generate options from callbacks
+  c.option '--demo', 'aaaa'
+
   c.option '--image TEMPLATE', String, 'instance template to use'
   c.option '--profile PROFILE', String, 'instance hardware profile'
   c.option '--copy-id', 'install public key on a machine'
@@ -99,7 +102,7 @@ command :create do |c|
       puts
 
       # TODO experimental callback integration
-      VirtualMaster::Callbacks.trigger_event(:create, :after)
+      VirtualMaster::Callbacks.trigger_event(:create, :after, options.__hash__)
 
       # copy ssh id
       # TODO move to callback
