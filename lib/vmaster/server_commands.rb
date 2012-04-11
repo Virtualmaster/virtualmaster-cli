@@ -93,6 +93,8 @@ command :create do |c|
     say "Default password '#{password}'"
     puts
 
+    options.password = password
+
     # copy-id implies waiting for instance to become operational
     if options.interactive
       print 'Waiting for instance'
@@ -105,31 +107,9 @@ command :create do |c|
       
       puts
 
-      # TODO experimental callback integration
-      VirtualMaster::Callbacks.trigger_event(:create, :after, options.__hash__)
+      # TODO consistent naming (instance vs server)
+      VirtualMaster::Callbacks.trigger_event(:create, :after, options.__hash__, instance)
 
-      # copy ssh id
-      # TODO move to callback
-      if options.copy_id
-        authorized_key = nil
-
-        abort "Specified identity file #{options.identity} doesn't exists!" unless File.exist?(options.identity)
-        
-        say "Loading identity file\n"
-        key = OpenSSL::PKey::RSA.new File.read options.identity
-        
-        # build authorized key output string
-        authtype = key.class.to_s.split('::').last.downcase
-        b64pub = ::Base64.encode64(key.to_blob).strip.gsub(/[\r\n]/, '')
-        authorized_key = "ssh-%s %s\n" % [authtype, b64pub]  # => ssh-rsa AAAAB3NzaC1...=
-        
-        Net::SSH.start(instance.public_addresses.first[:address], 'root', :password => password) do |ssh|
-          # TODO exception handling
-          output = ssh.exec!("mkdir ~/.ssh")
-          output = ssh.exec!("echo '#{authorized_key}' >>~/.ssh/authorized_keys")
-        end
-      end
-      
       puts
       puts "Instance ready!"
       puts "Try to login using `ssh root@#{instance.public_addresses.first[:address]}'"      
