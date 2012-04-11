@@ -15,6 +15,7 @@ module VirtualMaster
       def initialize(name, &block)
         @name = name
         @blocks = {}
+        # FIXME to autorun or not?
         @auto_run = true
         @option = nil
         
@@ -29,19 +30,35 @@ module VirtualMaster
         store_callback(event, :after, &block)
       end
 
-      def option(trigger)
-        # disable auto_run when option provided
+      def option(name, type, description)
+        # disable auto_run when option is provided
         @auto_run = false
 
-        @option = trigger
+        @option = {
+          :name => name,
+          :type => type,
+          :description => description
+        }
       end
 
       def fire(event, phase, options, server)
-        @blocks[event][phase].call(server) if includes?(event, phase) && (@auto_run || options[@option] == true)
+        @blocks[event][phase].call(options, server) if includes?(event, phase) && (@auto_run || options[@option[:name]])
       end
 
       def to_s
         @blocks.inspect
+      end
+
+      def has_option?
+        not @option.nil?
+      end
+
+      def to_option
+        arguments = []
+
+        arguments << "--#{@option[:name]} VALUE"
+        arguments << @option[:type] if @option[:type]
+        arguments << @option[:description]
       end
 
     private

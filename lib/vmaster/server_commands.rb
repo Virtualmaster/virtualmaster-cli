@@ -12,8 +12,6 @@ log.level = Logger::WARN
 
 command :create do |c|
   c.description = "Launch new server instance"
-  # FIXME generate options from callbacks
-  c.option '--demo', 'aaaa'
 
   c.option '--image TEMPLATE', String, 'instance template to use'
   c.option '--profile PROFILE', String, 'instance hardware profile'
@@ -22,6 +20,12 @@ command :create do |c|
   c.option '--zone ZONE', String, 'Availability zone to launch instance i'
   c.option '--level LEVEL', String, 'Instance level to use (personal, production)'
   c.option '--detached', 'Do not wait for instance to become operational (disables callbacks)'
+
+  # generate options for callbacks
+  VirtualMaster::CLI.callbacks.each do |cb|
+    c.send :option, *(cb.to_option)
+  end
+
   c.action do |args, options|
     # default values
     options.default :identity => File.join(ENV['HOME'], '.ssh/id_rsa')

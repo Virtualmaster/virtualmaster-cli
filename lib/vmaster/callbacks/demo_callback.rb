@@ -3,16 +3,10 @@
 #
 
 callback :demo do
-  # TODO how to trigger callback
-  # - default
-  # - by switch
-  # - pass options
-  # - ability to display options using 'help'
+  option :demo, String, 'Value to print'
 
-  option :demo, String
-
-  after :create do |server|
-    puts "Hello world!"
+  after :create do |options, server|
+    puts "Hello #{options[:demo]}"
   end
 
   after :shutdown do 
