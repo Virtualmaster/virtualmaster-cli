@@ -15,8 +15,6 @@ command :create do |c|
 
   c.option '--image TEMPLATE', String, 'instance template to use'
   c.option '--profile PROFILE', String, 'instance hardware profile'
-  c.option '--copy-id', 'install public key on a machine'
-  c.option '--identity IDENTITY', String, 'SSH identity to use (with --copy-id)'
   c.option '--zone ZONE', String, 'Availability zone to launch instance i'
   c.option '--level LEVEL', String, 'Instance level to use (personal, production)'
   c.option '--detached', 'Do not wait for instance to become operational (disables callbacks)'
@@ -28,7 +26,6 @@ command :create do |c|
 
   c.action do |args, options|
     # default values
-    options.default :identity => File.join(ENV['HOME'], '.ssh/id_rsa')
     options.default :zone => "prague-l1"
     options.default :level => "personal"
     options.default :interactive => true
@@ -77,6 +74,9 @@ command :create do |c|
     hwp = VirtualMaster::Helpers.get_hw_profile(profile[:memory], profile[:storage])
     abort "Internal error: hardware profile not available" unless hwp
 
+    # before :create callbacks
+    VirtualMaster::Callbacks.trigger_event(:create, :before, options.__hash__, nil)
+
     say "Creating '#{profile_name}' instance (#{profile[:memory]} MB memory/#{profile[:storage]/1024} GB storage)"
     
     realm = "#{options.zone}-#{options.level}"
@@ -106,12 +106,13 @@ command :create do |c|
       end
       
       puts
+      puts "Instance ready."
+      puts
 
       # TODO consistent naming (instance vs server)
       VirtualMaster::Callbacks.trigger_event(:create, :after, options.__hash__, instance)
 
       puts
-      puts "Instance ready!"
       puts "Try to login using `ssh root@#{instance.public_addresses.first[:address]}'"      
     end
   end
