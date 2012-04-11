@@ -3,10 +3,10 @@
 #
 
 callback :demo do
-  option :demo, String, 'Value to print'
+  option :demo, nil, 'Value to print'
 
   after :create do |options, server|
-    puts "Hello #{options[:demo]}"
+    puts "Hello world"
   end
 
   after :shutdown do 
