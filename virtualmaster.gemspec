@@ -4,12 +4,12 @@ require "vmaster/version"
 
 Gem::Specification.new do |s|
   s.name        = "virtualmaster"
-  s.version     = VirtualMaster::VERSION
+  s.version     = nirtualMaster::VERSION
   s.authors     = ["Radim Marek"]
   s.email       = ["radim@laststation.net"]
   s.homepage    = "https://github.com/virtualmaster/virtualmaster-cli"
-  s.summary     = %q{Command line interface to VirtualMaster}
-  s.description = %q{Command line interface to VirtualMaster. Control your virtual infrastructure.}
+  s.summary     = %q{Command line interface to Virtualmaster}
+  s.description = %q{Command line interface to Virtualmaster. Control your virtual infrastructure.}
 
   s.rubyforge_project = "vmaster"
 

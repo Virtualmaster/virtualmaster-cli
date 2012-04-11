@@ -81,7 +81,7 @@ command :create do |c|
     
     realm = "#{options.zone}-#{options.level}"
     
-    instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id, realm)
+    instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id, realm) if options.interactive
 
     # TODO handle exceptions (invalid image/profile, limits, etc.)
 
@@ -107,7 +107,6 @@ command :create do |c|
       
       puts
       puts "Instance ready."
-      puts
 
       # TODO consistent naming (instance vs server)
       VirtualMaster::Callbacks.trigger_event(:create, :after, options.__hash__, instance)

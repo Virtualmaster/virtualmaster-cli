@@ -1,6 +1,7 @@
-# VirtualMaster command line interface
+# Virtualmaster command line interface
 
-Proof of concept of VirtualMaster command line interface
+
+Proof of concept of Virtualmaster command line interface
 
     # virtualmaster config
     Running virtualmaster for first time.
@@ -13,12 +14,17 @@ Proof of concept of VirtualMaster command line interface
 
     Settings stored within ~/.virtualmaster
 
-    # virtualmaster create demo1 --image lucid
-    Using image 'lucid' with id (999).
-    Creating 'micro' instance (512 MB memory/5 GB storage).
-    Instance launch request accepted (instance id 44444).
-
+    # virtualmaster create demo1 --image ubuntu_lucid
+    Using image 'ubuntu_lucid' with ID 124
+    Creating 'micro' instance (512 MB memory/10 GB storage)
+    Instance launch request accepted. Instance ID 47135
+    
     Default password 'AdVc:PBi8&7L'.
+
+    Waiting for instance................
+    Instance ready.
+
+    Try to login using `ssh root@80.79.29.246'
 
     # virtualmaster instances
     +-------+---------+----------------+
@@ -33,22 +39,21 @@ The current version of `virtualmaster` command line interface should work with R
 
 ## Automatically install SSH keys
 
-VirtualMaster CLI can install your SSH keys to a remote machine automatically using `--copy-id` switch.
+Virtualmaster CLI can install your SSH keys to a remote machine automatically using `--identity IDENTITY_FILE` command-line option.
 
-
-	virtualmaster create demo1 --image ubuntu_lucid --copy-id 
+	virtualmaster create demo1 --image ubuntu_lucid --identity ~/.ssh/id_rsa
 	Using image 'ubuntu_lucid' with ID 124
 	Creating 'micro' instance (512 MB memory/10 GB storage)
 	Instance launch request accepted. Instance ID 45387
 
 	Default password 'vBK7i!kK'
-	Waiting for instance............
-	Loading identity file
 
-	Instance ready!
+	Waiting for instance............
+  Instance ready.
+
+	Loading identity file /Users/virtualmaster/.ssh/id_rsa
+
 	Try to login using `ssh root@195.140.253.130'
-	
-If you want to specify other key (ie. not ~/.ssh/id\_rsa) use option `--identity IDENTITY_FILE`.
 
 ## Instance size
 
