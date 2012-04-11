@@ -4,7 +4,7 @@ require "vmaster/version"
 
 Gem::Specification.new do |s|
   s.name        = "virtualmaster"
-  s.version     = nirtualMaster::VERSION
+  s.version     = VirtualMaster::VERSION
   s.authors     = ["Radim Marek"]
   s.email       = ["radim@laststation.net"]
   s.homepage    = "https://github.com/virtualmaster/virtualmaster-cli"
