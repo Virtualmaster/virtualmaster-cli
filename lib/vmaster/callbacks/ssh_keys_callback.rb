@@ -6,13 +6,18 @@ require 'net/ssh'
 require 'base64'
 require 'openssl'
 
-callback :ssh_keys do
+callback :ssh_copy_id do
   option :identity, String, 'Identity file which is going to be copied to target machine'
+
+  before :create do |options|
+    # FIXME requires support for optional values
+    options[:identity] ||= File.join(ENV['HOME'], '.ssh/id_rsa')
+
+    abort "Specified identity file #{options[:identity]} doesn't exist!" unless File.exist?(options[:identity])
+  end
 
   after :create do |options, server|
     authorized_key = nil
-
-    abort "Specified identity file #{options[:identity]} doesn't exist!" unless File.exist?(options[:identity])
 
     say "Loading identity file #{options[:identity]}\n"
     key = OpenSSL::PKey::RSA.new File.read options[:identity]
