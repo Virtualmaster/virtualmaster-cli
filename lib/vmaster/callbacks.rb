@@ -15,8 +15,6 @@ module VirtualMaster
       def initialize(name, &block)
         @name = name
         @blocks = {}
-        # FIXME to autorun or not?
-        @auto_run = true
         @option = nil
         
         instance_eval &block
@@ -30,10 +28,12 @@ module VirtualMaster
         store_callback(event, :after, &block)
       end
 
+      # 
+      # command line options provide configuration
+      # 
+      # TODO support for multiple options
+      #
       def option(name, type, description)
-        # disable auto_run when option is provided
-        @auto_run = false
-
         @option = {
           :name => name,
           :type => type,
@@ -42,7 +42,7 @@ module VirtualMaster
       end
 
       def fire(event, phase, options, server)
-        @blocks[event][phase].call(options, server) if includes?(event, phase) && (@auto_run || options[@option[:name]])
+        @blocks[event][phase].call(options, server) if includes?(event, phase) && options[@option[:name]]
       end
 
       def to_s
@@ -56,7 +56,10 @@ module VirtualMaster
       def to_option
         arguments = []
 
-        arguments << "--#{@option[:name]} VALUE"
+        option_name = "--#{@option[:name]}"
+        option_name << " VALUE" if @option[:type]
+
+        arguments << option_name
         arguments << @option[:type] if @option[:type]
         arguments << @option[:description]
       end
