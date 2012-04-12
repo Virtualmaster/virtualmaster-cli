@@ -29,8 +29,7 @@ callback :ssh_copy_id do
 
     Net::SSH.start(server.public_addresses.first[:address], 'root', :password => options[:password]) do |ssh|
       # TODO exception handling
-      output = ssh.exec!("mkdir ~/.ssh")
-      output = ssh.exec!("echo '#{authorized_key}' >>~/.ssh/authorized_keys")
+      output = ssh.exec!("umask 077 && test -d ~/.ssh || mkdir ~/.ssh && echo '#{authorized_key}' >>~/.ssh/authorized_keys")
     end
   end
 end
