@@ -24,7 +24,25 @@ VirtualMaster::CLI.run do
     VirtualMaster::Callbacks.load_file(f)
   end
 
-  # TODO find callbacks in other rubygems
+  # load callbacks from other gems
+  gems = {}
+  Gem.find_files("virtualmaster/**/cli-*.rb").each do |file|
+    file_name = file.split('/').last
+    cli_version = file_name.match(/\d+(\.\d+)+/).to_s
+
+    # evaluate only Gems compatible to current CLI specification
+    if cli_version == VirtualMaster.cli_spec_version
+      m = file.match(/\/gems\/(\w+-?\w+)-(\d+\.\d+\.\d+)\/lib\/virtualmaster(\/\w+)?\/cli-0.1.rb/)
+
+      gem_name = m.captures[0]
+      gem_version = m.captures[1]
+
+      # find the highest possible version
+      gems[gem_name] = gem_version if !gems.include?(gem_name) || gem_version > gems[gem_name]
+    end
+  end
+
+
 
   # include commands
   require 'vmaster/config_command'
