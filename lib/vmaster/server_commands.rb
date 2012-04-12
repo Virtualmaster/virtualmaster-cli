@@ -71,9 +71,6 @@ command :create do |c|
 
     abort "Image name '#{options.profile}' not recognized!" unless profile
 
-    hwp = VirtualMaster::Helpers.get_hw_profile(profile[:memory], profile[:storage])
-    abort "Internal error: hardware profile not available" unless hwp
-
     # before :create callbacks
     VirtualMaster::Callbacks.trigger_event(:create, :before, options.__hash__, nil)
 
@@ -81,7 +78,7 @@ command :create do |c|
 
     realm = "#{options.zone}-#{options.level}"
 
-    instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id, realm) if options.interactive
+    instance = VirtualMaster::Helpers.create_instance(name, image_id, profile, realm) if options.interactive
 
     # TODO handle exceptions (invalid image/profile, limits, etc.)
 
