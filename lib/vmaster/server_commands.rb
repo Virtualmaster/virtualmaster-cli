@@ -78,9 +78,9 @@ command :create do |c|
     VirtualMaster::Callbacks.trigger_event(:create, :before, options.__hash__, nil)
 
     say "Creating '#{profile_name}' instance (#{profile[:memory]} MB memory/#{profile[:storage]/1024} GB storage)"
-    
+
     realm = "#{options.zone}-#{options.level}"
-    
+
     instance = VirtualMaster::Helpers.create_instance(name, image_id, hwp.id, realm) if options.interactive
 
     # TODO handle exceptions (invalid image/profile, limits, etc.)
@@ -104,7 +104,7 @@ command :create do |c|
 
         sleep(5)
       end
-      
+
       puts
       puts "Instance ready."
 
@@ -139,14 +139,19 @@ command :list do |c|
   end
 end
 
-def instance_action(action, args)
+def instance_action(action, options, args)
   name = args.shift || abort('server name required')
 
   instance = VirtualMaster::Helpers.get_instance(name)
-  
+
   abort "Invalid instance name!" if instance.nil?
-  
+
+  VirtualMaster::Callbacks.trigger_event(action.to_sym, :before, options.__hash__, instance)
+
   instance.send("#{action}!")
+
+  VirtualMaster::Callbacks.trigger_event(action.to_sym, :after, options.__hash__, instance)
+
 end
 
 %w{start reboot stop shutdown destroy}.each do |cmd|
@@ -166,8 +171,13 @@ end
       c.description = "Remove server"
     end
 
+    # generate options for callbacks
+    VirtualMaster::CLI.callbacks.each do |cb|
+      c.send :option, *(cb.to_option)
+    end
+
     c.action do |args, options|
-      instance_action(c.name, args)
+      instance_action(c.name, options, args)
     end
   end
 end
