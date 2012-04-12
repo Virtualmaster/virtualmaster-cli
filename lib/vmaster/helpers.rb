@@ -64,7 +64,7 @@ module VirtualMaster
     def self.create_instance(name, image_id, profile, realm)
       api = VirtualMaster::CLI.api
 
-      api.create_instance(image_id, {:name => name, :memory => profile[:memory], :storage => profile[:storage], :realm_id => realm})
+      api.create_instance(image_id, {:name => name, :hwp_id => 'default', :memory => profile[:memory], :storage => profile[:storage], :realm_id => realm})
     end
   end
 end
