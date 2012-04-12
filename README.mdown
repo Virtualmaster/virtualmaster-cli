@@ -55,6 +55,14 @@ Virtualmaster CLI can install your SSH keys to a remote machine automatically us
 
 	Try to login using `ssh root@195.140.253.130'
 
+## Instance provisioning with shell scripts
+
+First steps towards automated infrastructure is provision. Using Virtualmaster CLI shell provisioner you can launch a custom shell script once server is created and automate initial setup.
+
+  virtualmaster create demo1 --script ~/setup.sh
+
+Callbacks (like script and identity) can be run at the same time.
+
 ## Instance size
 
 Default hardware profile for instances are defined in the [helpers file](https://github.com/Virtualmaster/virtualmaster-cli/blob/master/lib/vmaster/helpers.rb). Profiles are stored in configuration file when user runs `virtualmaster config`.
