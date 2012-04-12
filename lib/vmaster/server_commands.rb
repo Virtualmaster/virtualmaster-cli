@@ -78,7 +78,7 @@ command :create do |c|
 
     realm = "#{options.zone}-#{options.level}"
 
-    instance = VirtualMaster::Helpers.create_instance(name, image_id, profile, realm) if options.interactive
+    instance = VirtualMaster::Helpers.create_instance(name, image_id, profile, realm) 
 
     # TODO handle exceptions (invalid image/profile, limits, etc.)
 
