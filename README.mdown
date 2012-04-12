@@ -59,7 +59,7 @@ Virtualmaster CLI can install your SSH keys to a remote machine automatically us
 
 First steps towards automated infrastructure is provision. Using Virtualmaster CLI shell provisioner you can launch a custom shell script once server is created and automate initial setup.
 
-  virtualmaster create demo1 --script ~/setup.sh
+    virtualmaster create demo1 --script ~/setup.sh
 
 Callbacks (like script and identity) can be run at the same time.
 

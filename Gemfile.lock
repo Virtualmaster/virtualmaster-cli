@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    virtualmaster (0.1.1)
+    virtualmaster (0.1.2)
       commander (~> 4.1.2)
       deltacloud-client (~> 0.5.0)
       net-ssh (~> 2.3.0)
