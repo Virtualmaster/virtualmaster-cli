@@ -1,7 +1,7 @@
 module VirtualMaster
 
   CONFIG_FILE = ".virtualmaster"
-  DEFAULT_URL = "https://www.virtualmaster.cz/services/deltacloud"
+  DEFAULT_URL = "https://www.virtualmaster.com/virtualmaster/services/deltacloud"
 
   DEFAULT_IMAGE = 2486
   DEFAULT_PROFILE = "micro"
