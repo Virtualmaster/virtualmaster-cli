@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "VirtualMaster commands" do
+describe "VirtualMaster CLI" do
   before :each do
     @runner = Commander::Runner.instance
   end
