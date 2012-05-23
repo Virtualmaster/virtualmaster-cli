@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_dependency "deltacloud-client", "~> 0.5.0"
   s.add_dependency "terminal-table", "~> 1.4.4"
   s.add_dependency "net-ssh", "~> 2.3.0"
-  s.add_dependency "bundler"
 
   s.add_development_dependency "rspec", "~> 2"
 end
