@@ -2,6 +2,10 @@ $:.unshift File.dirname(__FILE__) + '/../lib'
 
 if ENV['COVERAGE']
   require 'simplecov'
+  require 'simplecov-rcov'
+
+  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+
   SimpleCov.start do
     add_filter '/vendor'
     add_filter '/spec'
