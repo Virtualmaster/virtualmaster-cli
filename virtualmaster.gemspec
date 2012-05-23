@@ -28,4 +28,6 @@ Gem::Specification.new do |s|
   s.add_dependency "net-ssh", "~> 2.3.0"
 
   s.add_development_dependency "rspec", "~> 2"
+  s.add_development_dependency "simplecov"
+  s.add_development_dependency "simplecov-rcov"
 end

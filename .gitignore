@@ -3,3 +3,4 @@
 pkg/*
 vendor/bundle
 vendor/cache
+coverage

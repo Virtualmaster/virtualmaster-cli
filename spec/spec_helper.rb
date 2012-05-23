@@ -1,5 +1,13 @@
 $:.unshift File.dirname(__FILE__) + '/../lib'
 
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/vendor'
+    add_filter '/spec'
+  end
+end
+
 require 'vmaster'
 
 # manually load commands
@@ -15,3 +23,5 @@ default_command :test
 
 command :test do |c|
 end
+
+
