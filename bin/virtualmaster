@@ -17,6 +17,10 @@ program :help_formatter, :compact
 
 default_command :help
 
+global_option '-c', '--config FILE', String, 'Config file to use (~/.virtualmaster is default)' do |file|
+  VirtualMaster::CLI.config_file(file)
+end
+
 VirtualMaster::CLI.run do
   # load callback
   callback_files = File.join(File.dirname(__FILE__), "../lib/vmaster/callbacks/*.rb")
@@ -32,5 +36,3 @@ VirtualMaster::CLI.run do
 end
 
 Commander::Runner.instance.run!
-
-
