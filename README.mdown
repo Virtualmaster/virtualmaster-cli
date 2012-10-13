@@ -26,12 +26,12 @@ Proof of concept of Virtualmaster command line interface distributed as a RubyGe
 
     Try to login using `ssh root@80.79.29.246'
 
-    # virtualmaster instances
-    +-------+---------+----------------+
-    | name  | state   | ip_address     |
-    +-------+---------+----------------+
-    | demo1 | RUNNING | 195.140.253.88 |
-    +-------+---------+----------------+
+    # virtualmaster list
+    +-------+---------+----------------+--------------+
+    | name  | state   | ip_address     | zone         |
+    +-------+---------+----------------+--------------+
+    | demo1 | RUNNING | 195.140.253.88 | vm-prague-l1 |
+    +-------+---------+----------------+--------------+
 
 ## Install
 
