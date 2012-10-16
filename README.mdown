@@ -80,5 +80,6 @@ Additional topics are available in [the wiki](https://github.com/Virtualmaster/v
 
 ## Changelog
 
+* v0.1.6 - Fixed default config file generator - images and profiles
 * v0.0.5 - Added support for availability zones and instance levels
 * v0.0.3 - First public release

@@ -5,8 +5,8 @@ require "vmaster/version"
 Gem::Specification.new do |s|
   s.name        = "virtualmaster"
   s.version     = VirtualMaster::VERSION
-  s.authors     = ["Radim Marek"]
-  s.email       = ["radim@laststation.net"]
+  s.authors     = ["Adam Kliment", "Radim Marek"]
+  s.email       = ["adam.kliment@virtualmaster.com"]
   s.homepage    = "https://github.com/virtualmaster/virtualmaster-cli"
   s.summary     = %q{Command line interface to Virtualmaster}
   s.description = %q{Command line interface to Virtualmaster. Control your virtual infrastructure.}

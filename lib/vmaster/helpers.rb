@@ -3,15 +3,17 @@ module VirtualMaster
   CONFIG_FILE = ".virtualmaster"
   DEFAULT_URL = "https://www.virtualmaster.com/virtualmaster/services/deltacloud"
 
-  DEFAULT_IMAGE = 2486
+  DEFAULT_IMAGE = 2664
   DEFAULT_PROFILE = "micro"
 
   # pre-defined list of images
   IMAGES = {
-    :ubuntu_precise => 2486,
-    :ubuntu_lucid => 124,
-    :debian_squeeze => 1741,
-    :centos_6 => 1743
+    :ubuntu_precise => 2664,
+    :ubuntu_lucid => 2818,
+    :debian_squeeze => 2808,
+    :centos_6 => 2818,
+    :centos_5 => 2804,
+    :archlinux => 2668
   }
 
   PROFILES = {
@@ -36,8 +38,8 @@ module VirtualMaster
       :storage => 40960,
     },
     :large => {
-      :memory => 8192,
-      :storage => 8192,
+      :memory => 7000,
+      :storage => 20480,
     }
   }
 
