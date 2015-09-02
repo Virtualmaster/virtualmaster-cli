@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   # s.add_runtime_dependency "rest-client"
   
   s.add_dependency "commander", "~> 4.3"
-  s.add_dependency "deltacloud-client", "~> 1.1"
+  s.add_dependency "deltacloud-client-vm", "~> 1.1.4.3"
   s.add_dependency "terminal-table", "~> 1.5"
   s.add_dependency "net-ssh", "~> 2.9"
   s.add_dependency "xml-simple", "~> 1.1"

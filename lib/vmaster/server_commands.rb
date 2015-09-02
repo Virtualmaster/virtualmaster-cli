@@ -123,7 +123,7 @@ command :list do |c|
 
     VirtualMaster::Helpers.get_instances.each do |instance|
       unless instance.public_addresses.first.nil?
-        ip_address = instance.public_addresses.first[:address]
+        ip_address = instance.public_addresses.first.value
       else
         ip_address = "(not assigned)"
       end

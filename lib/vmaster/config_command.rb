@@ -26,7 +26,7 @@ command :config do |c|
 
     # verify and store credentials
     begin
-      api = Deltacloud::Client(VirtualMaster::DEFAULT_URL, options.username, options.password)
+      api = DeltacloudVM::Client(VirtualMaster::DEFAULT_URL, options.username, options.password)
 
       config = {
         'username' => options.username,
@@ -41,7 +41,7 @@ command :config do |c|
       end
 
       say "Setting stored under #{config_file}"
-    rescue Deltacloud::Client::BackendError => e
+    rescue DeltacloudVM::Client::BackendError => e
       say "Unable to connect to VirtualMaster API: #{e.message}"
     rescue Exception => e
       say "Unable to configure environment: #{e.message}"
