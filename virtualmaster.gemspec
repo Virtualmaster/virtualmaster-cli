@@ -22,10 +22,11 @@ Gem::Specification.new do |s|
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
   
-  s.add_dependency "commander", "~> 4.1.2"
-  s.add_dependency "deltacloud-client", "~> 0.5.0"
-  s.add_dependency "terminal-table", "~> 1.4.4"
-  s.add_dependency "net-ssh", "~> 2.3.0"
+  s.add_dependency "commander", "~> 4.3"
+  s.add_dependency "deltacloud-client", "~> 1.1"
+  s.add_dependency "terminal-table", "~> 1.5"
+  s.add_dependency "net-ssh", "~> 2.9"
+  s.add_dependency "xml-simple", "~> 1.1"
 
   s.add_development_dependency "rspec", "~> 2"
   s.add_development_dependency "simplecov"

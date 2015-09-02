@@ -3,6 +3,7 @@ require 'net/ssh'
 require 'logger'
 require "base64"
 require 'openssl'
+require 'xmlsimple'
 
 log = Logger.new(STDOUT)
 log.level = Logger::WARN
@@ -85,9 +86,10 @@ command :create do |c|
     say "Instance launch request accepted. Instance ID #{instance.id}"
 
     # FIXME authentication is missrepresented within Ruby object
-    password = instance.authentication[:username]
+    instance_hash = XmlSimple.new().xml_in(instance.original_body.body)
+    password = instance_hash['authentication'].first['login'].first['password'].first
     puts
-    say "Default password '#{password}'"
+    say "Default password #{password}"
     puts
 
     options.password = password

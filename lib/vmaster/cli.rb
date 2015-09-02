@@ -1,5 +1,5 @@
 require 'yaml'
-require 'deltacloud'
+require 'deltacloud/client'
 
 module VirtualMaster
   class CLI
@@ -38,8 +38,8 @@ module VirtualMaster
           end
 
           begin
-            @@api = DeltaCloud.new(@@config[:username], @@config[:password], VirtualMaster::DEFAULT_URL)
-          rescue DeltaCloud::API::BackendError => e
+            @@api = Deltacloud::Client(VirtualMaster::DEFAULT_URL, @@config[:username], @@config[:password])
+          rescue Deltacloud::Client::BackendError => e
             abort "Invalid API response: #{e.message}"
           rescue Exception => e
             abort "Unable to connect to Virtualmaster's DeltaCloud API: #{e.message}" 
