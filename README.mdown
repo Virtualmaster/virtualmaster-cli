@@ -7,7 +7,7 @@ Proof of concept of Virtualmaster command line interface distributed as a RubyGe
     Running virtualmaster for first time.
     Setting up environment.
 
-    Your API credentials are available from http://www.virtualmaster.cz/en/api#settings
+    Your API credentials are available from https://www.virtualmaster.com/virtualmaster/en/api/index#settings
 
     Enter your API username:
     Enter your API password:

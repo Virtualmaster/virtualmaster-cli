@@ -17,7 +17,7 @@ command :config do |c|
 
     unless options.username && options.password
       say "\n"
-      say "Your API credentials are available from http://www.virtualmaster.cz/en/api#settings"
+      say "Your API credentials are available from https://www.virtualmaster.com/virtualmaster/en/api/index#settings"
       say "\n"
     end
 
